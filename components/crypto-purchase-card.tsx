@@ -1,166 +1,177 @@
-"use client"
-
-import { useState } from "react"
-import { ChevronDown, ChevronUp, Info } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import PaymentMethods from "@/components/payment-methods"
-import CryptoIcon from "@/components/crypto-icon"
-
-const cryptoOptions = [
-  { id: "btc", name: "Bitcoin", symbol: "BTC", rate: 0.0000099 },
-  { id: "eth", name: "Ethereum", symbol: "ETH", rate: 0.00033 },
-  { id: "sol", name: "Solana", symbol: "SOL", rate: 0.0077 },
-  { id: "doge", name: "Dogecoin", symbol: "DOGE", rate: 0.77 },
-  { id: "xrp", name: "Ripple", symbol: "XRP", rate: 0.88 },
-]
+"use client";
+import { useState } from "react";
+import { ArrowRight, CreditCard, Ban, Wallet } from "lucide-react";
 
 export default function CryptoPurchaseCard() {
-  const [selectedCrypto, setSelectedCrypto] = useState(cryptoOptions[0])
-  const [fiatAmount, setFiatAmount] = useState(100)
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [amount, setAmount] = useState("1000");
+  const [estimatedBtc, setEstimatedBtc] = useState(0.026);
 
-  const cryptoAmount = fiatAmount * selectedCrypto.rate
-
-  const formattedCryptoAmount = cryptoAmount.toFixed(
-    selectedCrypto.id === "btc" ? 7 : selectedCrypto.id === "eth" ? 5 : 4,
-  )
+  const handleAmountChange = (e: { target: { value: any } }) => {
+    const value = e.target.value;
+    setAmount(value);
+    // Simple estimation calculation - in a real app this would call an API
+    setEstimatedBtc(value ? parseFloat(value) * 0.000026 : 0);
+  };
 
   return (
-    <Card className="shadow-dark-lg border-dark-100 bg-dark-300 backdrop-blur-sm bg-opacity-80">
-      <CardContent className="p-6">
-        <div className="space-y-6">
-          {/* You Get Section */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-300">You get</label>
-            <div className="flex items-center gap-3 p-3 bg-dark-400 rounded-lg border border-dark-100">
-              <Select
-                value={selectedCrypto.id}
-                onValueChange={(value) => {
-                  const crypto = cryptoOptions.find((c) => c.id === value)
-                  if (crypto) setSelectedCrypto(crypto)
-                }}
-              >
-                <SelectTrigger className="w-[140px] border-0 bg-transparent focus:ring-0 p-0 h-auto text-white">
-                  <div className="flex items-center gap-2">
-                    <CryptoIcon cryptoId={selectedCrypto.id} />
-                    <SelectValue />
-                  </div>
-                </SelectTrigger>
-                <SelectContent className="bg-dark-300 border-dark-100">
-                  {cryptoOptions.map((crypto) => (
-                    <SelectItem
-                      key={crypto.id}
-                      value={crypto.id}
-                      className="text-gray-200 focus:text-white focus:bg-dark-100"
-                    >
-                      <div className="flex items-center gap-2">
-                        <CryptoIcon cryptoId={crypto.id} />
-                        {crypto.name}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <div className="flex-1 text-right font-mono text-lg text-white">≈ {formattedCryptoAmount}</div>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-300">You pay</label>
-            <div className="flex items-center gap-3 p-3 bg-dark-400 rounded-lg border border-dark-100">
-              <Input
-                type="number"
-                value={fiatAmount}
-                onChange={(e) => setFiatAmount(Number(e.target.value))}
-                className="border-0 bg-transparent focus:ring-0 p-0 h-auto text-lg text-white"
+    <div className="bg-[#1A1D26] border border-[#2B2F36] rounded-xl p-6">
+      <div className="flex flex-col space-y-6">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="w-full md:w-1/2">
+            <label className="block text-sm text-[#9DA0A6] mb-2">You Pay</label>
+            <div className="relative">
+              <input
+                type="text"
+                value={amount}
+                onChange={handleAmountChange}
+                className="w-full bg-[#272B36] border border-[#2B2F36] rounded-lg text-white p-4 pr-16 focus:outline-none focus:ring-2 focus:ring-[#00C26F] focus:border-transparent"
               />
-              <Select defaultValue="eur">
-                <SelectTrigger className="w-[80px] border-0 bg-transparent focus:ring-0 p-0 h-auto text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-dark-300 border-dark-100">
-                  <SelectItem value="eur" className="text-gray-200 focus:text-white focus:bg-dark-100">
-                    EUR
-                  </SelectItem>
-                  <SelectItem value="usd" className="text-gray-200 focus:text-white focus:bg-dark-100">
-                    USD
-                  </SelectItem>
-                  <SelectItem value="gbp" className="text-gray-200 focus:text-white focus:bg-dark-100">
-                    GBP
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
+                <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center bg-blue-500">
+                  <span className="text-white text-xs font-bold">$</span>
+                </div>
+                <span className="text-white font-medium">USD</span>
+              </div>
             </div>
           </div>
-
-          <div className="text-center text-sm text-gray-400">
-            {fiatAmount} EUR → {formattedCryptoAmount} {selectedCrypto.symbol}
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="sm" className="px-1 h-auto text-gray-400 hover:text-gray-300">
-                    <Info className="h-3 w-3" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent className="bg-dark-300 border-dark-100 text-gray-200">
-                  <p>
-                    Exchange rate: 1 {selectedCrypto.symbol} = {(1 / selectedCrypto.rate).toFixed(2)} EUR
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+          <div className="w-full md:w-1/2">
+            <label className="block text-sm text-[#9DA0A6] mb-2">You Get</label>
+            <div className="relative">
+              <input
+                type="text"
+                value={estimatedBtc.toFixed(6)}
+                readOnly
+                className="w-full bg-[#272B36] border border-[#2B2F36] rounded-lg text-white p-4 pr-16 focus:outline-none"
+              />
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
+                <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center bg-[#F7931A]">
+                  <span className="text-white text-xs font-bold">₿</span>
+                </div>
+                <span className="text-white font-medium">BTC</span>
+              </div>
+            </div>
           </div>
-
-          <Collapsible
-            open={isDetailsOpen}
-            onOpenChange={setIsDetailsOpen}
-            className="border border-dark-100 rounded-lg bg-dark-400"
-          >
-            <CollapsibleTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex w-full justify-between p-3 text-sm font-medium text-gray-300 hover:text-white"
-              >
-                Details
-                {isDetailsOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-              </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="p-3 pt-0 text-sm space-y-2 border-t border-dark-100">
-              <div className="flex justify-between">
-                <span className="text-gray-400">Network fee</span>
-                <span className="text-gray-200">0.00000500 {selectedCrypto.symbol}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400">Exchange fee</span>
-                <span className="text-gray-200">0.5%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400">Estimated delivery</span>
-                <span className="text-gray-200">5-30 minutes</span>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          <div className="space-y-3">
-            <label className="block text-sm font-medium text-gray-300">Payment method</label>
-            <PaymentMethods />
-          </div>
-
-          <Button className="w-full py-6 text-lg font-medium bg-gradient-to-r from-[#6a5aff] to-[#5f6fff] hover:from-[#5f6fff] hover:to-[#6a5aff] transition-all duration-300 shadow-dark-glow">
-            Buy {selectedCrypto.symbol}
-          </Button>
-
-          <p className="text-xs text-center text-gray-400">
-            By clicking the Buy button, you agree to our Terms of Service and Privacy Policy
-          </p>
         </div>
-      </CardContent>
-    </Card>
-  )
+
+        <div>
+          <label className="block text-sm text-[#9DA0A6] mb-2">
+            Payment Method
+          </label>
+          <div className="grid grid-cols-3 gap-2">
+            <button
+              onClick={() => setPaymentMethod("card")}
+              className={`flex flex-col items-center justify-center p-3 rounded-lg border ${
+                paymentMethod === "card"
+                  ? "border-[#00C26F] bg-[#0F1C17]"
+                  : "border-[#2B2F36] bg-[#272B36]"
+              } transition-all`}
+            >
+              <CreditCard
+                size={20}
+                className={
+                  paymentMethod === "card" ? "text-[#00C26F]" : "text-[#9DA0A6]"
+                }
+              />
+              <span
+                className={`text-xs mt-1 ${
+                  paymentMethod === "card" ? "text-[#00C26F]" : "text-[#9DA0A6]"
+                }`}
+              >
+                Card
+              </span>
+            </button>
+            <button
+              onClick={() => setPaymentMethod("bank")}
+              className={`flex flex-col items-center justify-center p-3 rounded-lg border ${
+                paymentMethod === "bank"
+                  ? "border-[#00C26F] bg-[#0F1C17]"
+                  : "border-[#2B2F36] bg-[#272B36]"
+              } transition-all`}
+            >
+              <Ban
+                size={20}
+                className={
+                  paymentMethod === "bank" ? "text-[#00C26F]" : "text-[#9DA0A6]"
+                }
+              />
+              <span
+                className={`text-xs mt-1 ${
+                  paymentMethod === "bank" ? "text-[#00C26F]" : "text-[#9DA0A6]"
+                }`}
+              >
+                Bank
+              </span>
+            </button>
+            <button
+              onClick={() => setPaymentMethod("crypto")}
+              className={`flex flex-col items-center justify-center p-3 rounded-lg border ${
+                paymentMethod === "crypto"
+                  ? "border-[#00C26F] bg-[#0F1C17]"
+                  : "border-[#2B2F36] bg-[#272B36]"
+              } transition-all`}
+            >
+              <Wallet
+                size={20}
+                className={
+                  paymentMethod === "crypto"
+                    ? "text-[#00C26F]"
+                    : "text-[#9DA0A6]"
+                }
+              />
+              <span
+                className={`text-xs mt-1 ${
+                  paymentMethod === "crypto"
+                    ? "text-[#00C26F]"
+                    : "text-[#9DA0A6]"
+                }`}
+              >
+                Crypto
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm text-[#9DA0A6] mb-2">
+            Your BTC Address
+          </label>
+          <input
+            type="text"
+            placeholder="Enter your BTC address"
+            className="w-full bg-[#272B36] border border-[#2B2F36] rounded-lg text-white p-4 focus:outline-none focus:ring-2 focus:ring-[#00C26F] focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm text-[#9DA0A6] mb-2">
+            Your Email
+          </label>
+          <input
+            type="email"
+            placeholder="Enter your email address"
+            className="w-full bg-[#272B36] border border-[#2B2F36] rounded-lg text-white p-4 focus:outline-none focus:ring-2 focus:ring-[#00C26F] focus:border-transparent"
+          />
+        </div>
+
+        <div className="pt-2">
+          <button className="w-full bg-[#00C26F] hover:bg-[#00B065] text-white rounded-lg p-4 flex items-center justify-center transition-colors">
+            <span className="font-medium">Buy Bitcoin</span>
+            <ArrowRight size={18} className="ml-2" />
+          </button>
+        </div>
+
+        <div className="text-xs text-[#9DA0A6] text-center">
+          By clicking "Buy Bitcoin", you agree to our{" "}
+          <a href="#" className="text-[#00C26F] hover:text-[#00B065]">
+            Terms of Use
+          </a>{" "}
+          and{" "}
+          <a href="#" className="text-[#00C26F] hover:text-[#00B065]">
+            Privacy Policy
+          </a>
+        </div>
+      </div>
+    </div>
+  );
 }

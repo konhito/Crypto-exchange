@@ -1,46 +1,49 @@
-import { ArrowRight } from "lucide-react"
-
-const steps = [
-  {
-    number: "01",
-    title: "Choose Crypto & Amount",
-    description: "Select the cryptocurrency you want to buy and enter the amount in your preferred fiat currency.",
-  },
-  {
-    number: "02",
-    title: "Select Payment Method",
-    description: "Choose from multiple payment options including credit cards, bank transfers, and digital wallets.",
-  },
-  {
-    number: "03",
-    title: "Receive Crypto in Wallet",
-    description: "Enter your wallet address and receive your cryptocurrency within minutes.",
-  },
-]
+import { CreditCard, ArrowRight, Wallet } from "lucide-react";
 
 export default function HowItWorks() {
+  const steps = [
+    {
+      number: "01",
+      icon: <CreditCard className="text-[#00C26F]" size={24} />,
+      title: "Choose Your Payment Method",
+      description:
+        "Select your preferred payment method: credit/debit card, bank transfer, or crypto",
+    },
+    {
+      number: "02",
+      icon: <ArrowRight className="text-[#00C26F]" size={24} />,
+      title: "Enter Your Bitcoin Address",
+      description:
+        "Provide your BTC wallet address where you want to receive your Bitcoin",
+    },
+    {
+      number: "03",
+      icon: <Wallet className="text-[#00C26F]" size={24} />,
+      title: "Receive Your Bitcoin",
+      description:
+        "Complete payment and receive your Bitcoin in as little as 5 minutes",
+    },
+  ];
+
   return (
-    <div className="relative">
-      <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-dark-100 -translate-y-1/2 z-0" />
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
-        {steps.map((step, index) => (
-          <div key={index} className="flex flex-col items-center text-center">
-            <div className="bg-dark-300 border-2 border-[#6a5aff] rounded-full w-16 h-16 flex items-center justify-center mb-6 shadow-dark-glow">
-              <span className="text-xl font-bold text-[#6a5aff]">{step.number}</span>
-            </div>
-
-            <h3 className="text-xl font-semibold mb-3 text-white">{step.title}</h3>
-            <p className="text-gray-400 mb-6">{step.description}</p>
-
-            {index < steps.length - 1 && (
-              <div className="hidden md:block absolute top-16 left-1/2 transform -translate-x-1/2">
-                <ArrowRight className="text-[#6a5aff] h-8 w-8" />
-              </div>
-            )}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {steps.map((step, index) => (
+        <div
+          key={index}
+          className="flex flex-col items-center text-center p-6 bg-[#1A1D26] border border-[#2B2F36] rounded-lg"
+        >
+          <div className="w-12 h-12 rounded-full bg-[#272B36] flex items-center justify-center mb-4">
+            {step.icon}
           </div>
-        ))}
-      </div>
+          <div className="text-xs font-medium text-[#00C26F] mb-2">
+            {step.number}
+          </div>
+          <h3 className="text-[#F6F7F8] font-medium text-base mb-2">
+            {step.title}
+          </h3>
+          <p className="text-[#9DA0A6] text-sm">{step.description}</p>
+        </div>
+      ))}
     </div>
-  )
+  );
 }
