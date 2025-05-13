@@ -11,7 +11,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import PaymentMethods from "@/components/payment-methods"
 import CryptoIcon from "@/components/crypto-icon"
 
-// Crypto options with their symbols and conversion rates (for demo purposes)
 const cryptoOptions = [
   { id: "btc", name: "Bitcoin", symbol: "BTC", rate: 0.0000099 },
   { id: "eth", name: "Ethereum", symbol: "ETH", rate: 0.00033 },
@@ -25,10 +24,8 @@ export default function CryptoPurchaseCard() {
   const [fiatAmount, setFiatAmount] = useState(100)
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
 
-  // Calculate crypto amount based on fiat input
   const cryptoAmount = fiatAmount * selectedCrypto.rate
 
-  // Format crypto amount to appropriate decimal places
   const formattedCryptoAmount = cryptoAmount.toFixed(
     selectedCrypto.id === "btc" ? 7 : selectedCrypto.id === "eth" ? 5 : 4,
   )
@@ -74,7 +71,6 @@ export default function CryptoPurchaseCard() {
             </div>
           </div>
 
-          {/* You Pay Section */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-300">You pay</label>
             <div className="flex items-center gap-3 p-3 bg-dark-400 rounded-lg border border-dark-100">
@@ -103,7 +99,6 @@ export default function CryptoPurchaseCard() {
             </div>
           </div>
 
-          {/* Conversion Display */}
           <div className="text-center text-sm text-gray-400">
             {fiatAmount} EUR → {formattedCryptoAmount} {selectedCrypto.symbol}
             <TooltipProvider>
@@ -122,7 +117,6 @@ export default function CryptoPurchaseCard() {
             </TooltipProvider>
           </div>
 
-          {/* Details Section */}
           <Collapsible
             open={isDetailsOpen}
             onOpenChange={setIsDetailsOpen}
@@ -153,18 +147,15 @@ export default function CryptoPurchaseCard() {
             </CollapsibleContent>
           </Collapsible>
 
-          {/* Payment Methods */}
           <div className="space-y-3">
             <label className="block text-sm font-medium text-gray-300">Payment method</label>
             <PaymentMethods />
           </div>
 
-          {/* Buy Button */}
           <Button className="w-full py-6 text-lg font-medium bg-gradient-to-r from-[#6a5aff] to-[#5f6fff] hover:from-[#5f6fff] hover:to-[#6a5aff] transition-all duration-300 shadow-dark-glow">
             Buy {selectedCrypto.symbol}
           </Button>
 
-          {/* Terms */}
           <p className="text-xs text-center text-gray-400">
             By clicking the Buy button, you agree to our Terms of Service and Privacy Policy
           </p>

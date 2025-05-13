@@ -34,7 +34,7 @@ export default function Home() {
         </header>
 
         <main className="flex-1">
-          {/* Hero Section */}
+         
           <section className="py-12 md:py-20 px-4">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-12">
@@ -53,7 +53,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Chart Section */}
           <section className="py-12 px-4 bg-dark-400">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
@@ -63,7 +62,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Why Choose Us */}
           <section className="py-12 md:py-20 px-4">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
@@ -73,7 +71,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* How It Works */}
           <section className="py-12 md:py-20 px-4 bg-dark-400">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
@@ -83,7 +80,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* FAQ Section */}
           <section className="py-12 md:py-20 px-4">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
@@ -93,7 +89,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Testimonials */}
           <section className="py-12 md:py-20 px-4 bg-dark-400">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">

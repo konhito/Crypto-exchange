@@ -1,6 +1,5 @@
 export default function CryptoIcon({ cryptoId }: { cryptoId: string }) {
-  // In a real app, you would use actual SVG icons or images for each cryptocurrency
-  // For this example, we'll use a simple representation with colored circles
+  
 
   const colors: Record<string, string> = {
     btc: "bg-orange-500",

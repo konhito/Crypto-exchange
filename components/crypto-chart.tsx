@@ -6,13 +6,11 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, type TooltipProps } from "recharts"
 import { cn } from "@/lib/utils"
 
-// Sample data for the chart
 const generateChartData = (points: number, baseValue: number, volatility: number) => {
   const data = []
   let currentValue = baseValue
 
   for (let i = 0; i < points; i++) {
-    // Add some randomness to simulate price movements
     const change = (Math.random() - 0.5) * volatility
     currentValue = Math.max(currentValue + change, 0.1) // Ensure value doesn't go below 0.1
 
@@ -56,7 +54,6 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
 export default function CryptoChart() {
   const [activeTimeframe, setActiveTimeframe] = useState("1d")
 
-  // Calculate if price went up or down
   const data = chartData[activeTimeframe as keyof typeof chartData]
   const priceChange = data[data.length - 1].price - data[0].price
   const percentChange = (priceChange / data[0].price) * 100

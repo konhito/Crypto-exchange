@@ -5,7 +5,6 @@ export default function Footer() {
     <footer className="bg-dark-400 border-t border-dark-100 py-12 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo and Description */}
           <div className="col-span-1 md:col-span-1">
             <div className="text-xl font-bold bg-gradient-to-r from-[#6a5aff] to-[#5f6fff] text-transparent bg-clip-text mb-4">
               CryptoExchange
@@ -29,7 +28,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-white font-semibold mb-4">Products</h3>
             <ul className="space-y-2">
@@ -61,7 +59,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Company */}
           <div>
             <h3 className="text-white font-semibold mb-4">Company</h3>
             <ul className="space-y-2">
@@ -93,7 +90,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Support */}
           <div>
             <h3 className="text-white font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
